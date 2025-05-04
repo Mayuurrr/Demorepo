@@ -1,14 +1,17 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3' // Make sure this is configured in Global Tool Configuration
+    environment {
+        // Optional: Set JAVA_HOME and MAVEN_HOME if needed
+        // JAVA_HOME = '/usr/lib/jvm/java-11-openjdk-amd64'
+        // MAVEN_HOME = '/usr/share/maven'
+        PATH = "/usr/share/maven/bin:$PATH"
     }
 
     stages {
         stage('Clone') {
             steps {
-                git credentialsId: 'github-pat', url: 'https://github.com/Mayuurrr/Demorepo.git', branch: 'main'
+                git url: 'https://github.com/Mayuurrr/Demorepo.git', branch: 'main'
             }
         }
 
@@ -20,8 +23,20 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'cp target/*.war /opt/tomcat/webapps/'
+                sh '''
+                    echo "Deploying WAR file to Tomcat..."
+                    cp target/*.war /opt/tomcat/webapps/
+                '''
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
