@@ -13,11 +13,14 @@ pipeline {
         }
 
         stage('Build') {
-            steps {
-                cleanWs()
-                sh 'mvn clean package'
-            }
-        }
+    steps {
+        sh '''
+            mkdir -p target
+            mvn clean package
+        '''
+    }
+}
+
 
         stage('Deploy') {
             steps {
