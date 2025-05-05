@@ -1,8 +1,8 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.8.7' // Must match the name in Jenkins "Global Tool Configuration"
+    environment {
+        PATH = "/usr/share/maven/bin:$PATH"
     }
 
     stages {
@@ -21,7 +21,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    echo "Running Maven build with Checkstyle skipped..."
+                    echo "Running Maven build..."
                     mvn clean package -Dcheckstyle.skip=true -X
                 '''
             }
@@ -30,16 +30,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    echo "Checking for WAR file in target/"
+                    echo "Checking for WAR file..."
                     ls -lh target/
 
                     WAR_FILE=$(ls target/*.war 2>/dev/null || true)
                     if [ -n "$WAR_FILE" ]; then
                         echo "Deploying WAR file to Tomcat..."
                         sudo cp $WAR_FILE /opt/tomcat/webapps/
-                        echo "Deployment done."
+                        echo "✅ Deployed: $WAR_FILE"
                     else
-                        echo "❌ WAR file not found! Skipping deployment."
+                        echo "❌ WAR file not found!"
                         exit 1
                     fi
                 '''
