@@ -25,7 +25,7 @@
     </properties>
 
     <dependencies>
-        <!-- Web, JPA, Thymeleaf -->
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -52,14 +52,14 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Tomcat support -->
+        <!-- Tomcat (for WAR deployment) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- DevTools -->
+        <!-- Developer Tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -67,7 +67,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Standard Testing -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -98,6 +98,25 @@
             <artifactId>spring-boot-testcontainers</artifactId>
             <version>3.4.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- ✅ JAXB for jakarta.xml.bind.annotation -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
+        <!-- ✅ JCache API -->
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 
