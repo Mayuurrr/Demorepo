@@ -2,9 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Optional: Set JAVA_HOME and MAVEN_HOME if needed
-        // JAVA_HOME = '/usr/lib/jvm/java-11-openjdk-amd64'
-        // MAVEN_HOME = '/usr/share/maven'
         PATH = "/usr/share/maven/bin:$PATH"
     }
 
@@ -17,6 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
+                cleanWs()
                 sh 'mvn clean package'
             }
         }
@@ -25,7 +23,12 @@ pipeline {
             steps {
                 sh '''
                     echo "Deploying WAR file to Tomcat..."
-                    cp target/*.war /opt/tomcat/webapps/
+                    if ls target/*.war 1> /dev/null 2>&1; then
+                        cp target/*.war /opt/tomcat/webapps/
+                    else
+                        echo "WAR file not found!"
+                        exit 1
+                    fi
                 '''
             }
         }
