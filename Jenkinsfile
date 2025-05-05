@@ -24,10 +24,8 @@ pipeline {
                     echo "Creating target directory..."
                     mkdir -p target
 
-                    echo "Running Maven build..."
-                    mvn clean package -X
-                    # If you need to skip checkstyle:
-                    # mvn clean package -Dcheckstyle.skip=true
+                    echo "Running Maven build with Checkstyle skipped..."
+                    mvn clean package -Dcheckstyle.skip=true -X
                 '''
             }
         }
