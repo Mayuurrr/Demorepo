@@ -1,105 +1,80 @@
-<!-- START OF FILE -->
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.4.2</version>
-    <relativePath></relativePath>
   </parent>
 
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic</artifactId>
   <version>3.4.0-SNAPSHOT</version>
-
-  <name>petclinic</name>
+  <name>spring-petclinic</name>
+  <description>Demo Spring Boot PetClinic Application</description>
 
   <properties>
     <java.version>17</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <project.build.outputTimestamp>2024-11-28T14:37:52Z</project.build.outputTimestamp>
-    <webjars-locator.version>1.0.1</webjars-locator.version>
-    <webjars-bootstrap.version>5.3.3</webjars-bootstrap.version>
-    <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
-    <checkstyle.version>10.20.1</checkstyle.version>
-    <jacoco.version>0.8.12</jacoco.version>
-    <libsass.version>0.2.29</libsass.version>
-    <lifecycle-mapping>1.0.0</lifecycle-mapping>
-    <maven-checkstyle.version>3.6.0</maven-checkstyle.version>
-    <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
-    <spring-format.version>0.0.43</spring-format.version>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
   </properties>
 
   <dependencies>
-    <!-- Spring, Web, DB, Test, Caching, Devtools dependencies -->
-    <!-- ... unchanged content ... -->
-    <!-- Add your existing dependency block here without changes -->
+    <!-- Web and JPA -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- Thymeleaf for views -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+
+    <!-- Validation -->
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+
+    <!-- H2 Database for development -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Spring Boot DevTools -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Testing -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Enforcer and formatting plugins -->
-      <!-- ... unchanged content ... -->
-
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.spring.nohttp</groupId>
-            <artifactId>nohttp-checkstyle</artifactId>
-            <version>${nohttp-checkstyle.version}</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <id>nohttp-checkstyle-validation</id>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <phase>validate</phase>
-            <configuration>
-              <configLocation>src/checkstyle/nohttp-checkstyle.xml</configLocation>
-              <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
-              <sourceDirectories>${basedir}</sourceDirectories>
-              <includes>**/*</includes>
-              <excludes>**/.git/**/*,**/.idea/**/*,**/target/**/,**/.flattened-pom.xml,**/*.class</excludes>
-              <propertyExpansion>config_loc=${basedir}/src/checkstyle/</propertyExpansion>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-
-      <!-- Other build and report plugins -->
-      <!-- ... unchanged content ... -->
     </plugins>
   </build>
 
-  <licenses>
-    <license>
-      <name>Apache License, Version 2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-    </license>
-  </licenses>
-
-  <repositories>
-    <!-- ... unchanged content ... -->
-  </repositories>
-  <pluginRepositories>
-    <!-- ... unchanged content ... -->
-  </pluginRepositories>
-
-  <profiles>
-    <!-- ... unchanged profile content ... -->
-  </profiles>
 </project>
-<!-- END OF FILE -->
