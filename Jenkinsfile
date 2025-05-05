@@ -30,13 +30,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    echo "Checking for WAR file..."
+                    echo "Checking for WAR file in target/..."
                     ls -lh target/
 
-                    WAR_FILE=$(ls target/*.war 2>/dev/null || true)
+                    WAR_FILE=$(find target -name "*.war" | head -n 1)
                     if [ -n "$WAR_FILE" ]; then
                         echo "Deploying WAR file to Tomcat..."
-                        sudo cp $WAR_FILE /opt/tomcat/webapps/
+                        sudo cp "$WAR_FILE" /opt/tomcat/webapps/
                         echo "✅ Deployed: $WAR_FILE"
                     else
                         echo "❌ WAR file not found!"
