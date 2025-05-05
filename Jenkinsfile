@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Clone') {
             steps {
                 git url: 'https://github.com/Mayuurrr/Demorepo.git', branch: 'main'
@@ -13,23 +19,29 @@ pipeline {
         }
 
         stage('Build') {
-    steps {
-        sh '''
-            mkdir -p target
-            mvn clean package
-        '''
-    }
-}
+            steps {
+                sh '''
+                    echo "Creating target directory..."
+                    mkdir -p target
 
+                    echo "Running Maven build..."
+                    mvn clean package -X
+                    # If you need to skip checkstyle:
+                    # mvn clean package -Dcheckstyle.skip=true
+                '''
+            }
+        }
 
         stage('Deploy') {
             steps {
                 sh '''
-                    echo "Deploying WAR file to Tomcat..."
-                    if ls target/*.war 1> /dev/null 2>&1; then
-                        cp target/*.war /opt/tomcat/webapps/
+                    echo "Checking for WAR file..."
+                    WAR_FILE=$(ls target/*.war 2>/dev/null || true)
+                    if [ -n "$WAR_FILE" ]; then
+                        echo "Deploying WAR file to Tomcat..."
+                        cp $WAR_FILE /opt/tomcat/webapps/
                     else
-                        echo "WAR file not found!"
+                        echo "WAR file not found! Skipping deployment."
                         exit 1
                     fi
                 '''
@@ -39,10 +51,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo '✅ Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed.'
+            echo '❌ Pipeline failed. Please check logs.'
         }
     }
 }
